@@ -3,17 +3,17 @@ import turtle
 letur = turtle.Turtle()
 letur.width(1)
 
-start = [-735, 390]
-
-letur.fillcolor('white')
-letur.color("white")
+start = [-920, 500]
+color = 'white'
+letur.fillcolor(color)
+letur.color(color)
 turtle.Screen().bgcolor('black')
 turtle.Screen().tracer(0, 0)
 #letur.fillcolor('blue')
 #letur.color("blue")
 
-y = 800
-gps = 15
+y = 1850
+gps = 8
 
 letur.penup()
 letur.goto(start)
@@ -26,7 +26,7 @@ def makleen(t : turtle, value : any, end : int, gps : int, leenlen : float | Non
     t.penup()
     t.goto(start[0] - 5, start[1] + (end - gps))
     t.setheading(0)
-    t.write(f"|{value}>", align="right")
+    t.write(f"|{value}>", align="right", font=("Arial", int(gps / 2), "normal"))
     t.forward(5)
     t.pendown()
     x = t.ycor() - start[1]
@@ -36,21 +36,24 @@ def makleen(t : turtle, value : any, end : int, gps : int, leenlen : float | Non
 
     return x
 
-def blipi(t : turtle, gps : int):    
+def blipi(t : turtle, gps : int):
+    x = gps / 2
     t.pendown()
-    t.back(gps / 2) ; t.setheading(270)
+    t.back(x) ; t.setheading(270)
     t.begin_fill()
-    t.circle(gps / 2) ; t.end_fill()
-    t.setheading(0) ; t.forward(gps / 2)
+    t.circle(x) ; t.end_fill()
+    t.setheading(0) ; t.forward(x)
     t.penup()
 
 def whynot(t : turtle, gps : int):
+    x = gps / 2
     t.pendown()
-    t.back(gps / 2) ; t.setheading(270)
-    t.circle(gps / 2)
-    t.setheading(0) ; t.forward(gps) ; t.back(gps / 2)
-    t.setheading(270) ; t.forward(gps / 2) ; t.back(gps)
-    t.forward(gps / 2) ; t.setheading(0)
+    t.width(1)
+    t.back(x) ; t.setheading(270)
+    t.circle(x)
+    t.setheading(0) ; t.forward(gps) ; t.back(x)
+    t.setheading(270) ; t.forward(x) ; t.back(gps)
+    t.forward(x) ; t.setheading(0)
     t.penup()
 
 def andgat(t : turtle, pos1 : int, pos2 : int, end : int, gps : int, start : list, inver : int | None = 0, leenlen : float | None = gps) -> float:
@@ -107,7 +110,10 @@ def exclugat(t : turtle, pos1 : int, pos2 : int, end : int, gps : int, start, in
 def tobegat(t : turtle, pos1 : int, pos2 : int, end : int, gps : int, start, inver : int | None = 0, leenlen : float | None = gps) -> float:
     end = andgat(t, pos1, pos2, end, gps, start, 1, leenlen)
     end = exclugat(t, pos1, pos2, end, gps, start, 1, leenlen)
-    end = andgat(t, (-(end / gps) - 1), -(end / gps), end, gps, start, inver, leenlen)
+    if bool(inver == 1):
+        end = andgat(t, (-(end / gps) - 1), -(end / gps), end, gps, start, 0, leenlen)
+    if bool(inver == 0):
+        end = andgat(t, (-(end / gps) - 1), -(end / gps), end, gps, start, 1, leenlen)
 
     return end
 
@@ -143,62 +149,48 @@ def meas(t : turtle, pos, y : float, end : int, gps : int, start):
 
     return end
 
-'''
-end = makleen(letur, 'A1', end, gps)
-end = makleen(letur, 'A2', end, gps)
-end = makleen(letur, 'A3', end, gps)
-end = makleen(letur, 'A4', end, gps)
-end = makleen(letur, 'B1', end, gps)
-end = makleen(letur, 'B2', end, gps)
-end = makleen(letur, 'B3', end, gps)
-end = makleen(letur, 'B4', end, gps)
+def widder(letur : turtle, pos1 : list, pos2 : list, follow : int, x : int, end : int, gps : int, start, leenlen : float | None = gps):
+    if bool(follow == 1):
+        cof = -(end / gps)
+        end = hadder(letur, pos1[0], pos2[0], end, gps, start, leenlen)
+        ste = -(end / gps) - 1
 
-end = andgat(letur, 2, 3, end, gps, start)
-end = exclugat(letur, 5, 7, end, gps, start, 1)
+        for q in range(x - 2):
+            end = fadder(letur, pos1[q + 1], pos2[q + 1], end, gps, start, leenlen)
+        
+        end = exclugat(letur, pos1[x - 1], pos2[x - 1], end, gps, start, 0, leenlen)
+        end = andgat(letur, pos1[x - 1], pos2[x - 1], end, gps, start, 0, leenlen)
 
-end = tobegat(letur, 1, 5, end, gps, start, 0)
+        end = exclugat(letur, (-(end) / gps) - 1, cof, end, gps, start, 0, leenlen)
+        end = andgat(letur, (-(end) / gps) - 2, cof, end, gps, start, 0, leenlen)
+
+        end = tobegat(letur, (-(end) / gps) - 2, (-(end) / gps), end, gps, start, 0, leenlen)
+
+        end = andgat(letur, 2, ste, end, gps, start, 0, leenlen)
+        for z in range(x - 1):
+            end = andgat(letur, 2, ste + (7 * (z + 1)) - 3, end, gps, start, 0, leenlen)
+
+        return end
+    
+    else:
+        end = hadder(letur, pos1[0], pos2[0], end, gps, start, leenlen)
+        ste = -(end / gps) - 1
+
+        for q in range(x - 1):
+            end = fadder(letur, pos1[q + 1], pos2[q + 1], end, gps, start, leenlen)
+
+        end = andgat(letur, 2, ste, end, gps, start, 0, leenlen)
+        for z in range(x - 1):
+            end = andgat(letur, 2, ste + (7 * (z + 1)) - 3, end, gps, start, 0, leenlen)
+
+        return end
+
+#This is where I inserted commands to be run
 #'''
-
-#'''
-x = 4
-
-end = makleen(letur, 0, end, gps, y)
 end = makleen(letur, 1, end, gps, y)
+end = makleen(letur, 0, end, gps, y)
 
-for z in range(x):
-    end = makleen(letur, f'A{z}', end, gps, y)
-
-for z in range(x):
-    end = makleen(letur, f"B{z}", end, gps, y)
-
-end = hadder(letur, 3, 7, end, gps, start, y)
-
-for q in range(x - 1):
-    z = q + 4
-    end = fadder(letur, z, x + z, end, gps, start, y)
-
-tirs = []
-end = andgat(letur, 2, 11, end, gps, start, 0, y)
-tirs.append(-(end / gps) + 1)
-for z in range(3):
-    end = andgat(letur, 2, 15 + (z * 7), end, gps, start, 0, y)
-    tirs.append(-(end / gps) + 1)
-
-meas(letur, tirs[0] - 1, y, end, gps, start)
-meas(letur, tirs[0], y, end, gps, start)
-meas(letur, tirs[1], y, end, gps, start)
-meas(letur, tirs[2], y, end, gps, start)
-
-
-
-#'''
-
-'''
-end = makleen(letur, "A1", end, gps, y)
-end = makleen(letur, "B1", end, gps, y)
-
-meas(letur, 1, y, end, gps, start)
-
+end = tobegat(letur, 1, 2, end, gps, start, 0, y)
 #'''
 
 
@@ -206,5 +198,4 @@ letur.setheading(0)
 letur.goto(start[0] - 30, start[1] + 10)
 turtle.update()
 
-if (input("sav ") == "yes"):
-    turtle.getcanvas().postscript(file="welp.eps")
+if (input("sav ") == "yes") : turtle.getcanvas().postscript(file="welp.eps")
