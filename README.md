@@ -9,6 +9,8 @@ Using combinations or CNOT and CCNOT gates, 'standard' logic gates were able to 
   NOR AND OR,
   Buffer and NOT.
 
+All gates only read inputs, not write to them, letting the data read later on.
+
 With these combinations, full adders were able to be rendered, and going one by one, the circuit was correct ( operation order being time, hence the diagram has logic flow from left to right ).
 
 Feel free to ask questions.
