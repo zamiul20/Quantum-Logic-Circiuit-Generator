@@ -22,7 +22,6 @@ lines = 0
 end = 0
 letur.speed(0)
 
-
 def makleen(t : turtle, value : any, end : int, gps : int, leenlen : float | None = gps) -> float:
     t.penup()
     oc = [t.xcor(), t.ycor()]
@@ -216,6 +215,79 @@ def retriv(letur : turtle, fact : int, gps : int, invert : int):
     if bool(invert == 0) : letur.goto(letur.xcor() - (gps * fact), letur.ycor())
     elif bool(invert == 1) : letur.goto(letur.xcor() + (gps * fact), letur.ycor())
     letur.pendown()
+
+def freefloat_gat(t : turtle, op : str, pos1 : int, pos2 : int, pos3 : int, start) -> None:
+    if bool(op == 'a'):
+        t.penup()
+        t.setheading(0)
+        t.forward(gps)
+        t.goto(t.xcor(), (start[1] - (pos1 * gps)))
+        blipi(t, gps / 2)
+        t.pendown()
+
+        t.goto(t.xcor(), (start[1] - (pos2 * gps)))
+        blipi(t, gps / 2)
+        t.pendown()
+
+        t.goto(t.xcor(), (start[1] - (pos3 * gps)))
+        whynot(t, gps / 2)
+        t.penup()
+    
+    elif bool(op == 'o'):
+        t.penup()
+        t.setheading(0)
+        t.forward(gps)
+
+        t.goto(t.xcor(), (start[1] - (pos1 * gps)))
+        blipi(t, gps / 2)
+        t.pendown()
+        t.goto(t.xcor(), (start[1] - (pos3 * gps)))
+        whynot(t, gps / 2)
+        t.penup()
+        t.forward(gps)
+
+        t.penup()
+        t.setheading(0)
+        t.goto(t.xcor(), (start[1] - (pos1 * gps)))
+        blipi(t, gps / 2)
+        t.pendown()
+        t.goto(t.xcor(), (start[1] - (pos2 * gps)))
+        blipi(t, gps / 2)
+        t.pendown()
+        t.goto(t.xcor(), (start[1] - (pos3 * gps)))
+        whynot(t, gps / 2)
+        t.forward(gps)
+
+        t.goto(t.xcor(), (start[1] - (pos2 * gps)))
+        blipi(t, gps / 2)
+        t.pendown()
+        t.goto(t.xcor(), (start[1] - (pos3 * gps)))
+        whynot(t, gps / 2)
+
+    elif bool(op == 'x'):
+        t.penup()
+        t.setheading(0)
+        t.forward(gps)
+
+        t.goto(t.xcor(), (start[1] - (pos1 * gps)))
+        blipi(t, gps / 2)
+
+        t.pendown()
+        t.goto(t.xcor(), (start[1] - (pos3 * gps)))
+        whynot(t, gps / 2)
+
+        t.penup()
+        t.forward(gps)
+
+        t.goto(t.xcor(), (start[1] - (pos2 * gps)))
+        blipi(t, gps / 2)
+
+        t.pendown()
+        t.goto(t.xcor(), (start[1] - (pos3 * gps)))
+        whynot(t, gps / 2)
+
+    t.penup()
+
 
 
 #This is where I inserted commands to be run
